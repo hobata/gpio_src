@@ -62,7 +62,7 @@ LOCAL void inthdr_sw(UINT intno)
 	gpio_set_irq_enabled(22, GPIO_EDGE_LOW, 1);	//割り込み条件の設定
 }
 
-LOCAL B ｃｈｋTMO(SYSTIM *pre, SYSTIM *now, int ms)
+LOCAL B chkTMO(SYSTIM *pre, SYSTIM *now, int ms)
 {
 	LSYSTIM p = knl_toLSYSTIM( pre );
 	LSYSTIM n = knl_toLSYSTIM( now );
@@ -80,7 +80,7 @@ LOCAL void task_led(INT stacd, void *exinf)
 	while(1) {
 		tk_slp_tsk(TMO_FEVR);
 		tk_get_otm(&now);
-		if (ｃｈｋTMO(&pre, &now, SW_CHA)) {
+		if (chkTMO(&pre, &now, SW_CHA)) {
 			val ^= 1;
 			gpio_set_val(GP_LED, val & 1);
 			pre = now;
